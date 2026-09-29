@@ -1,0 +1,50 @@
+name: Update GitHub Stats
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Every 12 hours
+  workflow_dispatch:       # Manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch latest stats SVGs
+        run: |
+          mkdir -p assets
+          
+          # Fetch stats card to temporary file
+          curl -s --fail --max-time 30 "https://github-stats-extended.vercel.app/api?username=sysretq0&show_icons=true&theme=github_dark&hide_border=true" -o assets/stats.tmp.svg || true
+          if [ -s assets/stats.tmp.svg ] && grep -q "<svg" assets/stats.tmp.svg; then
+            mv assets/stats.tmp.svg assets/stats.svg
+          else
+            echo "Warning: Failed to fetch valid stats.svg, keeping existing file."
+            rm -f assets/stats.tmp.svg
+          fi
+
+          # Fetch top-langs card to temporary file
+          curl -s --fail --max-time 30 "https://github-stats-extended.vercel.app/api/top-langs/?username=sysretq0&layout=compact&theme=github_dark&exclude_repo=android-kernel-common&hide_border=true" -o assets/top-langs.tmp.svg || true
+          if [ -s assets/top-langs.tmp.svg ] && grep -q "<svg" assets/top-langs.tmp.svg; then
+            mv assets/top-langs.tmp.svg assets/top-langs.svg
+          else
+            echo "Warning: Failed to fetch valid top-langs.svg, keeping existing file."
+            rm -f assets/top-langs.tmp.svg
+          fi
+
+      - name: Commit and push if updated
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/
+          if git diff --staged --quiet; then
+            echo "No changes in stats SVGs."
+          else
+            git commit -m "chore(stats): update github stats SVGs [skip ci]"
+            git push
+          fi

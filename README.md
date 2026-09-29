@@ -8,8 +8,8 @@ Focusing on custom Android/GKI infrastructure, Linux Security Modules (LSM), and
 
 ### Stats
 <p align="center">
-  <img src="https://github-stats-extended.vercel.app/api?username=sysretq0&show_icons=true&theme=github_dark&hide_border=true" alt="GitHub Stats" />
-  <img src="https://github-stats-extended.vercel.app/api/top-langs/?username=sysretq0&layout=compact&theme=github_dark&exclude_repo=android-kernel-common&hide_border=true" alt="Top Languages" />
+  <img src="./assets/stats.svg" alt="GitHub Stats" />
+  <img src="./assets/top-langs.svg" alt="Top Languages" />
 </p>
 
 ---
