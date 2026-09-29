@@ -2,7 +2,14 @@
 
 Systems programming & Linux kernel internals (`ring0 ⇄ ring3`).
 
-Focusing on custom Android/GKI infrastructure, Linux Security Modules (LSM), and userspace memory management in Rust & C.
+#### Userspace Engineering
+- **Process eviction & reclamation** ([`mini-lmk`](https://github.com/sysretq0/mini-lmk)): Low-overhead, composable userspace OOM handling and process eviction.
+- **Zero-allocation task introspection** ([`fgres`](https://github.com/sysretq0/fgres)): Event-driven foreground resolution via `inotify` and `/proc/<pid>/task` traversal.
+- **Low-overhead performance telemetry** (`taskfps`): Event-driven frame-rate monitoring and display metrics.
+
+#### Kernel & Security
+- **Data-driven LSMs**: Kernel module gating ([`android-module-gate`](https://github.com/sysretq0/android-module-gate)) & per-device partition protection on GKI ([`android-partition-guard`](https://github.com/sysretq0/android-partition-guard)).
+- **GKI Infrastructure**: Automated common kernel builds (5.10–6.18) with KernelSU-Next, NoMount & AnyKernel3 ([`android-kernel-builder`](https://github.com/sysretq0/android-kernel-builder)).
 
 <p align="center">
   <img src="https://github-stats-extended.vercel.app/api?username=sysretq0&show_icons=true&theme=github_dark&hide_border=true" alt="sysretq0's GitHub Stats" />
